@@ -8,7 +8,7 @@ const initialState: Classroom = {
   link: '',
   maxStudents: 0,
   students: [],
-  nonAnonymousStudents: [],
+  nonAnonymousStudentsAmount: 0,
 };
 
 export const fetchClassroom = createAsyncThunk<Classroom>(
@@ -55,9 +55,9 @@ const classroomSlice = createSlice({
     builder.addCase(fetchClassroom.fulfilled, (_, action) => {
       return {
         ...action.payload,
-        nonAnonymousStudents: action.payload.students.filter(
+        nonAnonymousStudentsAmount: action.payload.students.filter(
           (student) => student.name
-        ),
+        ).length,
       };
     });
   },

@@ -7,5 +7,5 @@ export interface Classroom {
   link: string;
   maxStudents: number;
   students: Student[];
-  nonAnonymousStudents: Student[];
+  nonAnonymousStudentsAmount: number;
 }

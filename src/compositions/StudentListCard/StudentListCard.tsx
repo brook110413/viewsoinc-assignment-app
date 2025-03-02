@@ -18,9 +18,8 @@ const TABS = {
 type TabType = (typeof TABS)[keyof typeof TABS];
 
 export const StudentListCard = () => {
-  const { name, nonAnonymousStudents, students, maxStudents } = useAppSelector(
-    (state) => state.classroom
-  );
+  const { name, nonAnonymousStudentsAmount, students, maxStudents } =
+    useAppSelector((state) => state.classroom);
   const [activeTab, setActiveTab] = useState<TabType>(TABS.STUDENTS);
 
   const handleTabClick = useCallback((tab: TabType) => {
@@ -34,7 +33,7 @@ export const StudentListCard = () => {
         <StyledIcon className="material-icons" size="24px">
           person
         </StyledIcon>
-        {nonAnonymousStudents.length}/{maxStudents}
+        {nonAnonymousStudentsAmount}/{maxStudents}
       </StyledClassTitle>
       <StyledTabContainer>
         <StyledTab
