@@ -47,8 +47,6 @@ export const StyledStudentCard = styled.div.withConfig({
   ${({ isGuest }) =>
     isGuest &&
     `
-      pointer-events: none;
-
       ${StyledStudentNumber} {
         background-color: #9e9e9e;
       }

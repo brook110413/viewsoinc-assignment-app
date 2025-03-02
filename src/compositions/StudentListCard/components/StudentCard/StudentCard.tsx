@@ -33,12 +33,16 @@ export const StudentCard = memo(({ id, order, name, points }: Student) => {
         <StyledPointsButton
           type="down"
           onClick={handleDecrement}
-          disabled={points === 0}
+          disabled={points === 0 || !name}
         >
           -1
         </StyledPointsButton>
         <StyledPointsCount>{points}</StyledPointsCount>
-        <StyledPointsButton type="up" onClick={handleIncrement}>
+        <StyledPointsButton
+          type="up"
+          onClick={handleIncrement}
+          disabled={!name}
+        >
           +1
         </StyledPointsButton>
       </StyledPointsButtons>

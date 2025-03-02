@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useAppSelector } from '@/redux/store';
 import { StudentCard } from './components/StudentCard/StudentCard';
 import { Card } from '@/components';
@@ -27,8 +27,8 @@ export const StudentListCard = () => {
     setActiveTab(tab);
   }, []);
 
-  const titleSection = useMemo(
-    () => (
+  return (
+    <Card>
       <StyledClassTitle>
         {name}
         <StyledIcon className="material-icons" size="24px">
@@ -36,12 +36,6 @@ export const StudentListCard = () => {
         </StyledIcon>
         {nonAnonymousStudents.length}/{maxStudents}
       </StyledClassTitle>
-    ),
-    [name, nonAnonymousStudents.length, maxStudents]
-  );
-
-  const tabButtons = useMemo(
-    () => (
       <StyledTabContainer>
         <StyledTab
           active={activeTab === TABS.STUDENTS}
@@ -56,30 +50,16 @@ export const StudentListCard = () => {
           Group
         </StyledTab>
       </StyledTabContainer>
-    ),
-    [activeTab, handleTabClick]
-  );
-
-  const studentList = useMemo(
-    () =>
-      students.map(({ id, order, name, points }) => (
-        <StudentCard
-          key={id}
-          id={id}
-          order={order}
-          name={name}
-          points={points}
-        />
-      )),
-    [students]
-  );
-
-  return (
-    <Card>
-      {titleSection}
-      {tabButtons}
       <StyledStudentGrid columns={activeTab === 'group' ? 5 : 4}>
-        {studentList}
+        {students.map(({ id, order, name, points }) => (
+          <StudentCard
+            key={id}
+            id={id}
+            order={order}
+            name={name}
+            points={points}
+          />
+        ))}
       </StyledStudentGrid>
     </Card>
   );
