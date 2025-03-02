@@ -35,10 +35,20 @@ const students = [
   { id: '18', name: 'Calvin', votes: 2 },
   { id: '19', name: 'Guest', votes: 0 },
   { id: '20', name: 'Joe', votes: 0 },
+  { id: '21', name: 'Guest', votes: 0 },
+  { id: '22', name: 'Guest', votes: 0 },
+  { id: '23', name: 'Guest', votes: 0 },
+  { id: '24', name: 'Guest', votes: 0 },
+  { id: '25', name: 'Guest', votes: 0 },
+  { id: '26', name: 'Guest', votes: 0 },
 ];
 
 export const StudentListCard = () => {
-  const [activeTab, setActiveTab] = useState('students');
+  const [activeTab, setActiveTab] = useState<'students' | 'group'>('students');
+
+  const handleTabClick = (tab: 'students' | 'group') => {
+    setActiveTab(tab);
+  };
 
   return (
     <Card>
@@ -52,18 +62,18 @@ export const StudentListCard = () => {
       <StyledTabContainer>
         <StyledTab
           active={activeTab === 'students'}
-          onClick={() => setActiveTab('students')}
+          onClick={() => handleTabClick('students')}
         >
           Student List
         </StyledTab>
         <StyledTab
           active={activeTab === 'group'}
-          onClick={() => setActiveTab('group')}
+          onClick={() => handleTabClick('group')}
         >
           Group
         </StyledTab>
       </StyledTabContainer>
-      <StyledStudentGrid>
+      <StyledStudentGrid columns={activeTab === 'group' ? 5 : 4}>
         {students.map((student) => (
           <StyledStudentCard key={student.id}>
             <StyledStudentNumber>{student.id}</StyledStudentNumber>

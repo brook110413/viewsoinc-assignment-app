@@ -10,7 +10,6 @@ export const StyledClassTitle = styled.div`
 
 export const StyledTabContainer = styled.div`
   display: flex;
-  border-bottom: 1px solid #eee;
 `;
 
 export const StyledTab = styled.div<{ active?: boolean }>`
@@ -18,26 +17,28 @@ export const StyledTab = styled.div<{ active?: boolean }>`
   cursor: pointer;
   background-color: ${(props) => (props.active ? 'white' : '#f0f0f0')};
   font-weight: ${(props) => (props.active ? 'bold' : 'normal')};
+  color: ${(props) => (props.active ? '#4285f4' : '#000')};
 `;
 
-export const StyledStudentGrid = styled.div`
+export const StyledStudentGrid = styled.div<{ columns?: number }>`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-  padding: 15px;
+  grid-template-columns: ${(props) =>
+    props.columns ? `repeat(${props.columns}, 1fr)` : 'repeat(4, 1fr)'};
+  grid-template-rows: auto auto;
+  gap: 5px;
   overflow-y: auto;
-  height: calc(100% - 120px);
+  width: 100%;
+  padding: 15px;
 `;
 
 export const StyledStudentCard = styled.div`
   border: 1px solid #eee;
   border-radius: 5px;
-  overflow: hidden;
 `;
 
 export const StyledStudentNumber = styled.div`
   background-color: #4285f4;
-  color: white;
+  color: #fff;
   padding: 5px 0;
   text-align: center;
 `;
@@ -61,15 +62,13 @@ export const StyledVoteButton = styled.button<{ type: string }>`
       : props.type === 'up'
       ? '#4caf50'
       : '#e0e0e0'};
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 3px;
   padding: 2px 5px;
-  width: 30px;
 `;
 
 export const StyledVoteCount = styled.span`
   display: inline-block;
-  width: 30px;
   text-align: center;
 `;

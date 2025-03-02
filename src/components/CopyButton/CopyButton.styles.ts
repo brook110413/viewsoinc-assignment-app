@@ -7,7 +7,7 @@ export const StyledCopyButtonContainer = styled.div`
 
 export const StyledCopyButton = styled.button`
   background-color: #4285f4;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 5px;
   padding: 5px;

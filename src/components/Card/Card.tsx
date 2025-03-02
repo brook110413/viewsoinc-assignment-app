@@ -7,9 +7,10 @@ import {
 import { StyledIcon } from '@/styles';
 interface CardProps {
   children: React.ReactNode;
+  background?: string;
 }
 
-export const Card: React.FC<CardProps> = ({ children }) => {
+export const Card: React.FC<CardProps> = ({ children, background }) => {
   const [isClose, setIsClose] = useState(false);
 
   const handleClose = () => setIsClose(true);
@@ -17,7 +18,7 @@ export const Card: React.FC<CardProps> = ({ children }) => {
   if (isClose) return null;
 
   return (
-    <StyledCard>
+    <StyledCard background={background}>
       <StyledCloseButton onClick={handleClose}>
         <StyledIcon className="material-icons" size="24px">
           close
