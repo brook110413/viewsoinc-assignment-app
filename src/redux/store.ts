@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
-import counterReducer from './slices/counterSlice';
+import classroomReducer from './slices/classroomSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    classroom: classroomReducer,
   },
 });
 

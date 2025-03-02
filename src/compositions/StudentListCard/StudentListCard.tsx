@@ -1,4 +1,9 @@
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
+import { useAppSelector, useAppDispatch } from '@/redux/store';
+import {
+  decrementStudentPoints,
+  incrementStudentPoints,
+} from '@/redux/slices/classroomSlice';
 import { Card } from '@/components';
 import {
   StyledClassTitle,
@@ -8,83 +13,110 @@ import {
   StyledStudentCard,
   StyledStudentNumber,
   StyledStudentName,
-  StyledVoteButtons,
-  StyledVoteButton,
-  StyledVoteCount,
+  StyledPointsButtons,
+  StyledPointsButton,
+  StyledPointsCount,
 } from './StudentListCard.styles';
 import { StyledIcon } from '@/styles';
 
-const students = [
-  { id: '01', name: 'Philip', votes: 2 },
-  { id: '02', name: 'Darrell', votes: 5 },
-  { id: '03', name: 'Guest', votes: 0 },
-  { id: '04', name: 'Cody', votes: 9 },
-  { id: '05', name: 'Guest', votes: 0 },
-  { id: '06', name: 'Guest', votes: 0 },
-  { id: '07', name: 'Bessie', votes: 0 },
-  { id: '08', name: 'Wendy', votes: 3 },
-  { id: '09', name: 'Guest', votes: 0 },
-  { id: '10', name: 'Esther', votes: 1 },
-  { id: '11', name: 'Guest', votes: 0 },
-  { id: '12', name: 'Gloria', votes: 1 },
-  { id: '13', name: 'Guest', votes: 0 },
-  { id: '14', name: 'Lee', votes: 2 },
-  { id: '15', name: 'Guest', votes: 0 },
-  { id: '16', name: 'Ann', votes: 0 },
-  { id: '17', name: 'Jacob', votes: 8 },
-  { id: '18', name: 'Calvin', votes: 2 },
-  { id: '19', name: 'Guest', votes: 0 },
-  { id: '20', name: 'Joe', votes: 0 },
-  { id: '21', name: 'Guest', votes: 0 },
-  { id: '22', name: 'Guest', votes: 0 },
-  { id: '23', name: 'Guest', votes: 0 },
-  { id: '24', name: 'Guest', votes: 0 },
-  { id: '25', name: 'Guest', votes: 0 },
-  { id: '26', name: 'Guest', votes: 0 },
-];
+const TABS = {
+  STUDENTS: 'students' as const,
+  GROUP: 'group' as const,
+};
+
+type TabType = (typeof TABS)[keyof typeof TABS];
 
 export const StudentListCard = () => {
+  const dispatch = useAppDispatch();
+  const { name, nonAnonymousStudents, students, maxStudents } = useAppSelector(
+    (state) => state.classroom
+  );
   const [activeTab, setActiveTab] = useState<'students' | 'group'>('students');
 
-  const handleTabClick = (tab: 'students' | 'group') => {
+  const handleTabClick = useCallback((tab: TabType) => {
     setActiveTab(tab);
-  };
+  }, []);
 
-  return (
-    <Card>
+  const handleIncrementPoints = useCallback(
+    (id: number) => {
+      dispatch(incrementStudentPoints(id));
+    },
+    [dispatch]
+  );
+
+  const handleDecrementPoints = useCallback(
+    (id: number) => {
+      dispatch(decrementStudentPoints(id));
+    },
+    [dispatch]
+  );
+
+  const titleSection = useMemo(
+    () => (
       <StyledClassTitle>
-        302 Science
+        {name}
         <StyledIcon className="material-icons" size="24px">
           person
         </StyledIcon>
-        16/30
+        {nonAnonymousStudents.length}/{maxStudents}
       </StyledClassTitle>
+    ),
+    [name, nonAnonymousStudents.length, maxStudents]
+  );
+
+  const tabButtons = useMemo(
+    () => (
       <StyledTabContainer>
         <StyledTab
-          active={activeTab === 'students'}
-          onClick={() => handleTabClick('students')}
+          active={activeTab === TABS.STUDENTS}
+          onClick={() => handleTabClick(TABS.STUDENTS)}
         >
           Student List
         </StyledTab>
         <StyledTab
-          active={activeTab === 'group'}
-          onClick={() => handleTabClick('group')}
+          active={activeTab === TABS.GROUP}
+          onClick={() => handleTabClick(TABS.GROUP)}
         >
           Group
         </StyledTab>
       </StyledTabContainer>
+    ),
+    [activeTab, handleTabClick]
+  );
+
+  const studentList = useMemo(
+    () =>
+      students.map(({ id, order, name, points }) => (
+        <StyledStudentCard key={id} isGuest={!name}>
+          <StyledStudentNumber>{order}</StyledStudentNumber>
+          <StyledStudentName>{name || 'Guest'}</StyledStudentName>
+          <StyledPointsButtons>
+            <StyledPointsButton
+              type="down"
+              onClick={() => handleDecrementPoints(id)}
+              disabled={points === 0}
+            >
+              -1
+            </StyledPointsButton>
+            <StyledPointsCount>{points}</StyledPointsCount>
+            <StyledPointsButton
+              type="up"
+              onClick={() => handleIncrementPoints(id)}
+            >
+              +1
+            </StyledPointsButton>
+          </StyledPointsButtons>
+        </StyledStudentCard>
+      )),
+    [students, handleDecrementPoints, handleIncrementPoints]
+  );
+
+  return (
+    <Card>
+      {titleSection}
+      {tabButtons}
       <StyledStudentGrid columns={activeTab === 'group' ? 5 : 4}>
-        {students.map((student) => (
-          <StyledStudentCard key={student.id}>
-            <StyledStudentNumber>{student.id}</StyledStudentNumber>
-            <StyledStudentName>{student.name}</StyledStudentName>
-            <StyledVoteButtons>
-              <StyledVoteButton type="down">-1</StyledVoteButton>
-              <StyledVoteCount>{student.votes}</StyledVoteCount>
-              <StyledVoteButton type="up">+1</StyledVoteButton>
-            </StyledVoteButtons>
-          </StyledStudentCard>
-        ))}
+        {studentList}
       </StyledStudentGrid>
     </Card>
   );
