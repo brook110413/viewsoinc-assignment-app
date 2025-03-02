@@ -37,11 +37,7 @@ const classroomSlice = createSlice({
       );
       if (studentIndex === -1) return;
 
-      const student = state.students[studentIndex];
-      state.students[studentIndex] = {
-        ...student,
-        points: student.points + 1,
-      };
+      state.students[studentIndex].points += 1;
     },
     decrementStudentPoints: (state, action: PayloadAction<number>) => {
       const studentIndex = state.students.findIndex(
@@ -52,10 +48,7 @@ const classroomSlice = createSlice({
       const student = state.students[studentIndex];
       if (student.points <= 0) return;
 
-      state.students[studentIndex] = {
-        ...student,
-        points: student.points - 1,
-      };
+      state.students[studentIndex].points -= 1;
     },
   },
   extraReducers: (builder) => {

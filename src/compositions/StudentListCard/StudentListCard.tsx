@@ -1,21 +1,12 @@
 import { useState, useMemo, useCallback } from 'react';
-import { useAppSelector, useAppDispatch } from '@/redux/store';
-import {
-  decrementStudentPoints,
-  incrementStudentPoints,
-} from '@/redux/slices/classroomSlice';
+import { useAppSelector } from '@/redux/store';
+import { StudentCard } from './components/StudentCard/StudentCard';
 import { Card } from '@/components';
 import {
   StyledClassTitle,
   StyledTab,
   StyledTabContainer,
   StyledStudentGrid,
-  StyledStudentCard,
-  StyledStudentNumber,
-  StyledStudentName,
-  StyledPointsButtons,
-  StyledPointsButton,
-  StyledPointsCount,
 } from './StudentListCard.styles';
 import { StyledIcon } from '@/styles';
 
@@ -27,29 +18,14 @@ const TABS = {
 type TabType = (typeof TABS)[keyof typeof TABS];
 
 export const StudentListCard = () => {
-  const dispatch = useAppDispatch();
   const { name, nonAnonymousStudents, students, maxStudents } = useAppSelector(
     (state) => state.classroom
   );
-  const [activeTab, setActiveTab] = useState<'students' | 'group'>('students');
+  const [activeTab, setActiveTab] = useState<TabType>(TABS.STUDENTS);
 
   const handleTabClick = useCallback((tab: TabType) => {
     setActiveTab(tab);
   }, []);
-
-  const handleIncrementPoints = useCallback(
-    (id: number) => {
-      dispatch(incrementStudentPoints(id));
-    },
-    [dispatch]
-  );
-
-  const handleDecrementPoints = useCallback(
-    (id: number) => {
-      dispatch(decrementStudentPoints(id));
-    },
-    [dispatch]
-  );
 
   const titleSection = useMemo(
     () => (
@@ -87,28 +63,15 @@ export const StudentListCard = () => {
   const studentList = useMemo(
     () =>
       students.map(({ id, order, name, points }) => (
-        <StyledStudentCard key={id} isGuest={!name}>
-          <StyledStudentNumber>{order}</StyledStudentNumber>
-          <StyledStudentName>{name || 'Guest'}</StyledStudentName>
-          <StyledPointsButtons>
-            <StyledPointsButton
-              type="down"
-              onClick={() => handleDecrementPoints(id)}
-              disabled={points === 0}
-            >
-              -1
-            </StyledPointsButton>
-            <StyledPointsCount>{points}</StyledPointsCount>
-            <StyledPointsButton
-              type="up"
-              onClick={() => handleIncrementPoints(id)}
-            >
-              +1
-            </StyledPointsButton>
-          </StyledPointsButtons>
-        </StyledStudentCard>
+        <StudentCard
+          key={id}
+          id={id}
+          order={order}
+          name={name}
+          points={points}
+        />
       )),
-    [students, handleDecrementPoints, handleIncrementPoints]
+    [students]
   );
 
   return (
