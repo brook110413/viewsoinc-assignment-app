@@ -1,16 +1,16 @@
 import { useState } from 'react';
+import { StyledIcon } from '@/styles';
 import {
   StyledCard,
   StyledCardContent,
   StyledCloseButton,
 } from './Card.styles';
-import { StyledIcon } from '@/styles';
+
 interface CardProps {
   children: React.ReactNode;
-  background?: string;
 }
 
-export const Card = ({ children, background }: CardProps) => {
+export const Card = ({ children }: CardProps) => {
   const [isClose, setIsClose] = useState(false);
 
   const handleClose = () => setIsClose(true);
@@ -18,7 +18,7 @@ export const Card = ({ children, background }: CardProps) => {
   if (isClose) return null;
 
   return (
-    <StyledCard background={background}>
+    <StyledCard>
       <StyledCloseButton onClick={handleClose}>
         <StyledIcon className="material-icons" size={24}>
           close

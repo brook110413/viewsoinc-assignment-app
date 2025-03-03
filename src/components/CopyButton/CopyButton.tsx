@@ -1,8 +1,8 @@
+import { StyledIcon } from '@/styles';
 import {
   StyledCopyButton,
   StyledCopyButtonContainer,
 } from './CopyButton.styles';
-import { StyledIcon } from '@/styles';
 
 interface CopyButtonProps {
   copyContent: string;
