@@ -1,7 +1,10 @@
 import { useState, useCallback, useRef, useMemo } from 'react';
 import { useAppSelector } from '@/redux/store';
-import { StudentCard } from './components/StudentCard/StudentCard';
 import { Card, Menu } from '@/components';
+import { StyledIcon } from '@/styles';
+import { useMedia } from '@/hooks';
+import { ICON_SIZE_MAP } from '@/utils';
+import { StudentCard } from './components/StudentCard/StudentCard';
 import {
   StyledClassTitle,
   StyledTab,
@@ -10,15 +13,6 @@ import {
   StyledMenuButton,
   StyledControlSection,
 } from './StudentListCard.styles';
-import { StyledIcon } from '@/styles';
-import { useMedia } from '@/hooks';
-
-const ICON_SIZE_MAP = {
-  mobile: 18,
-  tablet: 24,
-  desktop: 24,
-  largeDesktop: 24,
-} as const;
 
 const TABS = {
   STUDENTS: 'students' as const,

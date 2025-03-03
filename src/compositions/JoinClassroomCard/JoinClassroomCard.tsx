@@ -1,6 +1,9 @@
+import { useMemo } from 'react';
 import { Card, CopyButton } from '@/components';
 import { useAppSelector } from '@/redux/store';
 import { useMedia } from '@/hooks';
+import { ICON_SIZE_MAP } from '@/utils';
+import { StyledIcon } from '@/styles';
 import {
   StyledBackToClassList,
   StyledClassTitle,
@@ -9,20 +12,10 @@ import {
   StyledQRImage,
   StyledVersion,
 } from './JoinClassroomCard.styles';
-import { StyledIcon } from '@/styles';
-import { useMemo } from 'react';
-
-const ICON_SIZE_MAP = {
-  mobile: 18,
-  tablet: 24,
-  desktop: 24,
-  largeDesktop: 24,
-} as const;
 
 export const JoinClassroomCard = () => {
-  const { name, code, link } = useAppSelector((state) => state.classroom);
   const { media } = useMedia();
-
+  const { name, code, link } = useAppSelector((state) => state.classroom);
   const backwardIconSize = useMemo(() => ICON_SIZE_MAP[media], [media]);
 
   return (
