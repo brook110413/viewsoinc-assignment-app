@@ -50,6 +50,7 @@ export const StyledMenuButton = styled.button`
 
 export const StyledControlSection = styled.div`
   width: 100%;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;

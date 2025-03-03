@@ -1,7 +1,7 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { useAppSelector } from '@/redux/store';
 import { StudentCard } from './components/StudentCard/StudentCard';
-import { Card } from '@/components';
+import { Card, Menu } from '@/components';
 import {
   StyledClassTitle,
   StyledTab,
@@ -20,12 +20,22 @@ const TABS = {
 type TabType = (typeof TABS)[keyof typeof TABS];
 
 export const StudentListCard = () => {
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const { name, nonAnonymousStudentsAmount, students, maxStudents } =
     useAppSelector((state) => state.classroom);
   const [activeTab, setActiveTab] = useState<TabType>(TABS.STUDENTS);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleTabClick = useCallback((tab: TabType) => {
     setActiveTab(tab);
+  }, []);
+
+  const handleMenuClick = useCallback(() => {
+    setIsMenuOpen((prev) => !prev);
+  }, []);
+
+  const handleMenuClose = useCallback(() => {
+    setIsMenuOpen(false);
   }, []);
 
   return (
@@ -52,11 +62,20 @@ export const StudentListCard = () => {
             Group
           </StyledTab>
         </StyledTabContainer>
-        <StyledMenuButton>
+        <StyledMenuButton ref={menuButtonRef} onClick={handleMenuClick}>
           <StyledIcon className="material-icons" size="24px">
             more_vert
           </StyledIcon>
         </StyledMenuButton>
+        <Menu
+          anchorEl={menuButtonRef.current}
+          open={isMenuOpen}
+          onClose={handleMenuClose}
+        >
+          <Menu.Item>重新整理</Menu.Item>
+          <Menu.Item>匯出成績</Menu.Item>
+          <Menu.Item>設定</Menu.Item>
+        </Menu>
       </StyledControlSection>
       <StyledStudentGrid columns={activeTab === 'group' ? 5 : 4}>
         {students.map(({ id, order, name, points }) => (
