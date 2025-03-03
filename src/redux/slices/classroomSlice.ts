@@ -41,13 +41,13 @@ const classroomSlice = createSlice({
   reducers: {
     incrementStudentPoints: (state, action: PayloadAction<number>) => {
       const result = findTargetStudentIndex(state.students, action.payload);
-      if (!result) return;
+      if (result === null) return;
 
       state.students[result].points += 1;
     },
     decrementStudentPoints: (state, action: PayloadAction<number>) => {
       const result = findTargetStudentIndex(state.students, action.payload);
-      if (!result) return;
+      if (result === null) return;
 
       const targetStudent = state.students[result];
       if (targetStudent.points <= 0) return;
