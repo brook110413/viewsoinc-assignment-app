@@ -7,6 +7,8 @@ import {
   StyledTab,
   StyledTabContainer,
   StyledStudentGrid,
+  StyledMenuButton,
+  StyledControlSection,
 } from './StudentListCard.styles';
 import { StyledIcon } from '@/styles';
 
@@ -35,20 +37,27 @@ export const StudentListCard = () => {
         </StyledIcon>
         {nonAnonymousStudentsAmount}/{maxStudents}
       </StyledClassTitle>
-      <StyledTabContainer>
-        <StyledTab
-          active={activeTab === TABS.STUDENTS}
-          onClick={() => handleTabClick(TABS.STUDENTS)}
-        >
-          Student List
-        </StyledTab>
-        <StyledTab
-          active={activeTab === TABS.GROUP}
-          onClick={() => handleTabClick(TABS.GROUP)}
-        >
-          Group
-        </StyledTab>
-      </StyledTabContainer>
+      <StyledControlSection>
+        <StyledTabContainer>
+          <StyledTab
+            active={activeTab === TABS.STUDENTS}
+            onClick={() => handleTabClick(TABS.STUDENTS)}
+          >
+            Student List
+          </StyledTab>
+          <StyledTab
+            active={activeTab === TABS.GROUP}
+            onClick={() => handleTabClick(TABS.GROUP)}
+          >
+            Group
+          </StyledTab>
+        </StyledTabContainer>
+        <StyledMenuButton>
+          <StyledIcon className="material-icons" size="24px">
+            more_vert
+          </StyledIcon>
+        </StyledMenuButton>
+      </StyledControlSection>
       <StyledStudentGrid columns={activeTab === 'group' ? 5 : 4}>
         {students.map(({ id, order, name, points }) => (
           <StudentCard

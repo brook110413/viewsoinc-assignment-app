@@ -34,3 +34,23 @@ export const StyledStudentGrid = styled.div.withConfig({
   width: 100%;
   padding: 15px;
 `;
+
+export const StyledMenuButton = styled.button`
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+  }
+`;
+
+export const StyledControlSection = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
