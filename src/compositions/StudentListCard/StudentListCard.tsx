@@ -72,9 +72,8 @@ export const StudentListCard = () => {
           open={isMenuOpen}
           onClose={handleMenuClose}
         >
-          <Menu.Item>重新整理</Menu.Item>
-          <Menu.Item>匯出成績</Menu.Item>
-          <Menu.Item>設定</Menu.Item>
+          <Menu.Item>Refresh</Menu.Item>
+          <Menu.Item>Export Score</Menu.Item>
         </Menu>
       </StyledControlSection>
       <StyledStudentGrid columns={activeTab === 'group' ? 5 : 4}>
