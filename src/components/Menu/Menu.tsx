@@ -32,10 +32,7 @@ export const Menu = ({ anchorEl, open, onClose, children }: MenuProps) => {
   const rect = anchorEl.getBoundingClientRect();
 
   return (
-    <StyledMenu
-      top={rect.bottom + window.scrollY}
-      right={window.innerWidth - rect.right}
-    >
+    <StyledMenu top={rect.bottom} right={window.innerWidth - rect.right}>
       {children}
     </StyledMenu>
   );
