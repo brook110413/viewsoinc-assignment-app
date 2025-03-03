@@ -14,8 +14,8 @@ export const StyledAppBackground = styled.div`
   overflow: auto;
 `;
 
-export const StyledIcon = styled.i<{ size?: string }>`
-  font-size: ${(props) => props.size || '14px'};
+export const StyledIcon = styled.i<{ size?: number }>`
+  font-size: ${(props) => (props.size ? `${props.size}px` : '14px')};
 `;
 
 export const StyledClassroomContainer = styled.div`

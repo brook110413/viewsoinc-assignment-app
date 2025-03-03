@@ -1,26 +1,34 @@
+import { media } from '@/styles/breakpoints';
 import { styled } from 'styled-components';
 
 export const StyledClassTitle = styled.div`
-  font-size: 18px;
+  font-size: 14px;
   font-weight: bold;
   margin-bottom: 10px;
   display: flex;
   align-items: center;
+
+  ${media.tablet} {
+    font-size: 18px;
+  }
 `;
 
 export const StyledTabContainer = styled.div`
   display: flex;
-  margin-bottom: 10px;
 `;
 
 export const StyledTab = styled.div.withConfig({
   shouldForwardProp: (prop) => prop !== 'active',
 })<{ active?: boolean }>`
-  padding: 15px 30px;
+  padding: 10px;
   cursor: pointer;
   background-color: ${(props) => (props.active ? 'white' : '#f0f0f0')};
   font-weight: ${(props) => (props.active ? 'bold' : 'normal')};
   color: ${(props) => (props.active ? '#4285f4' : '#000')};
+
+  ${media.tablet} {
+    padding: 15px 30px;
+  }
 `;
 
 export const StyledStudentGrid = styled.div.withConfig({
@@ -54,4 +62,5 @@ export const StyledControlSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 10px;
 `;

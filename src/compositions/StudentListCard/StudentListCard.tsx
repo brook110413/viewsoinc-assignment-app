@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useMemo } from 'react';
 import { useAppSelector } from '@/redux/store';
 import { StudentCard } from './components/StudentCard/StudentCard';
 import { Card, Menu } from '@/components';
@@ -11,6 +11,14 @@ import {
   StyledControlSection,
 } from './StudentListCard.styles';
 import { StyledIcon } from '@/styles';
+import { useMedia } from '@/hooks';
+
+const ICON_SIZE_MAP = {
+  mobile: 18,
+  tablet: 24,
+  desktop: 24,
+  largeDesktop: 24,
+} as const;
 
 const TABS = {
   STUDENTS: 'students' as const,
@@ -20,11 +28,14 @@ const TABS = {
 type TabType = (typeof TABS)[keyof typeof TABS];
 
 export const StudentListCard = () => {
+  const { media } = useMedia();
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const { name, nonAnonymousStudentsAmount, students, maxStudents } =
     useAppSelector((state) => state.classroom);
   const [activeTab, setActiveTab] = useState<TabType>(TABS.STUDENTS);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const IconSize = useMemo(() => ICON_SIZE_MAP[media], [media]);
 
   const handleTabClick = useCallback((tab: TabType) => {
     setActiveTab(tab);
@@ -42,7 +53,7 @@ export const StudentListCard = () => {
     <Card>
       <StyledClassTitle>
         {name}
-        <StyledIcon className="material-icons" size="24px">
+        <StyledIcon className="material-icons" size={IconSize}>
           person
         </StyledIcon>
         {nonAnonymousStudentsAmount}/{maxStudents}
@@ -63,7 +74,7 @@ export const StudentListCard = () => {
           </StyledTab>
         </StyledTabContainer>
         <StyledMenuButton ref={menuButtonRef} onClick={handleMenuClick}>
-          <StyledIcon className="material-icons" size="24px">
+          <StyledIcon className="material-icons" size={IconSize}>
             more_vert
           </StyledIcon>
         </StyledMenuButton>

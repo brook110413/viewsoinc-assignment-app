@@ -20,7 +20,7 @@ export const Card = ({ children, background }: CardProps) => {
   return (
     <StyledCard background={background}>
       <StyledCloseButton onClick={handleClose}>
-        <StyledIcon className="material-icons" size="24px">
+        <StyledIcon className="material-icons" size={24}>
           close
         </StyledIcon>
       </StyledCloseButton>

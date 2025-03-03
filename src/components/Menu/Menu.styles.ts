@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-export const StyledMenu = styled.div<{ top: number; right: number }>`
+export const StyledMenu = styled.div.withConfig({
+  shouldForwardProp: (prop) => {
+    const invalidProps = ['top', 'right'];
+    return !invalidProps.includes(prop);
+  },
+})<{ top: number; right: number }>`
   position: fixed;
   top: ${(props) => props.top}px;
   right: ${(props) => props.right}px;

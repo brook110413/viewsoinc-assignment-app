@@ -16,6 +16,7 @@ export const StyledStudentName = styled.div`
 export const StyledPointsButtons = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0 5px 5px 5px;
 `;
 
@@ -36,6 +37,7 @@ export const StyledPointsButton = styled.button<{ type: string }>`
 export const StyledPointsCount = styled.span`
   display: inline-block;
   text-align: center;
+  width: 20px;
 `;
 
 export const StyledStudentCard = styled.div.withConfig({
