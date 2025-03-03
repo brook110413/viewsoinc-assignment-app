@@ -56,7 +56,7 @@ const classroomSlice = createSlice({
       return {
         ...action.payload,
         nonAnonymousStudentsAmount: action.payload.students.filter(
-          (student) => student.name
+          ({ name }) => name
         ).length,
       };
     });
