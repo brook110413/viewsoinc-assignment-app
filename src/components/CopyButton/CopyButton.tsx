@@ -9,10 +9,7 @@ interface CopyButtonProps {
   label?: string;
 }
 
-export const CopyButton: React.FC<CopyButtonProps> = ({
-  copyContent,
-  label,
-}) => {
+export const CopyButton = ({ copyContent, label }: CopyButtonProps) => {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(copyContent);

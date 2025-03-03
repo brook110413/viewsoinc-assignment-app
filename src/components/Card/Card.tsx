@@ -10,7 +10,7 @@ interface CardProps {
   background?: string;
 }
 
-export const Card: React.FC<CardProps> = ({ children, background }) => {
+export const Card = ({ children, background }: CardProps) => {
   const [isClose, setIsClose] = useState(false);
 
   const handleClose = () => setIsClose(true);
