@@ -8,9 +8,8 @@ export const useMedia = () => {
 
   const getMedia = (): Media => {
     const width = window.innerWidth;
-    if (width >= parseInt(breakpoints.largeDesktop)) return 'largeDesktop';
-    if (width >= parseInt(breakpoints.desktop)) return 'desktop';
-    if (width >= parseInt(breakpoints.tablet)) return 'tablet';
+    if (width >= breakpoints.desktop) return 'desktop';
+    if (width >= breakpoints.tablet) return 'tablet';
     return 'mobile';
   };
 
