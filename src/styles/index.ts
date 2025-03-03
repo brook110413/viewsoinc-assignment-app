@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { media } from './breakpoints';
 
 export * from './GlobalStyle';
 
@@ -20,6 +21,13 @@ export const StyledIcon = styled.i<{ size?: string }>`
 export const StyledClassroomContainer = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
   gap: 20px;
   padding: 20px;
+
+  ${media.desktop} {
+    min-height: 100vh;
+    flex-direction: row;
+  }
 `;
