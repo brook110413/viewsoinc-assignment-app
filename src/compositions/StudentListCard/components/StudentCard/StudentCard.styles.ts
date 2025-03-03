@@ -20,9 +20,11 @@ export const StyledPointsButtons = styled.div`
   padding: 0 5px 5px 5px;
 `;
 
-export const StyledPointsButton = styled.button<{ type: string }>`
+export const StyledPointsButton = styled.button<{
+  type: 'decrement' | 'increment';
+}>`
   background-color: ${(props) =>
-    props.type === 'down' ? '#f44336' : '#4caf50'};
+    props.type === 'decrement' ? '#f44336' : '#4caf50'};
   color: #fff;
   border: none;
   border-radius: 3px;

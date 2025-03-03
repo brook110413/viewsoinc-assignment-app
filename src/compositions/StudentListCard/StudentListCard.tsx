@@ -28,7 +28,6 @@ export const StudentListCard = () => {
     useAppSelector((state) => state.classroom);
   const [activeTab, setActiveTab] = useState<TabType>(TABS.STUDENTS);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const IconSize = useMemo(() => ICON_SIZE_MAP[media], [media]);
 
   const handleTabClick = useCallback((tab: TabType) => {
