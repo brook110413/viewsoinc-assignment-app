@@ -19,6 +19,21 @@ const findTargetStudentIndex = (
   return studentIndex === -1 ? null : studentIndex;
 };
 
+const updateStudentPoints = (
+  state: Classroom,
+  studentId: number,
+  operation: 'increment' | 'decrement'
+) => {
+  const result = findTargetStudentIndex(state.students, studentId);
+  if (result === null) return;
+
+  const targetStudent = state.students[result];
+
+  if (operation === 'decrement' && targetStudent.points <= 0) return;
+
+  targetStudent.points += operation === 'increment' ? 1 : -1;
+};
+
 export const fetchClassroom = createAsyncThunk<Classroom>(
   'classroom/fetchClassroom',
   async (_, { rejectWithValue }) => {
@@ -40,21 +55,10 @@ const classroomSlice = createSlice({
   initialState,
   reducers: {
     incrementStudentPoints: (state, action: PayloadAction<number>) => {
-      const result = findTargetStudentIndex(state.students, action.payload);
-      if (result === null) return;
-
-      const targetStudent = state.students[result];
-
-      targetStudent.points += 1;
+      updateStudentPoints(state, action.payload, 'increment');
     },
     decrementStudentPoints: (state, action: PayloadAction<number>) => {
-      const result = findTargetStudentIndex(state.students, action.payload);
-      if (result === null) return;
-
-      const targetStudent = state.students[result];
-      if (targetStudent.points <= 0) return;
-
-      targetStudent.points -= 1;
+      updateStudentPoints(state, action.payload, 'decrement');
     },
   },
   extraReducers: (builder) => {
