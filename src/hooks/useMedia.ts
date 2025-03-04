@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { breakpoints } from '../styles/breakpoints';
+import { breakpoints } from '@/styles/breakpoints';
 
 type Media = keyof typeof breakpoints;
 
